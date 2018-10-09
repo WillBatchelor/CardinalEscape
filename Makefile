@@ -1,6 +1,6 @@
 WORGLE=worgle/worgle
 
-CFLAGS = -Wall -pedantic -O2
+CFLAGS = -Wall -pedantic -O2 -std=c89
 
 LDFLAGS=-lncurses
 
