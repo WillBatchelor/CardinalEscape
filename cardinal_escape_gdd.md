@@ -31,8 +31,10 @@ Once the player orients to a wall the game will do either of the following depen
 A key is the only usable object that can be picked up and used by the player. The key will be obtained at the end of the game to unock the door and escape the room. The key will be in a locked strongbox with an 8 digit keypad. The player will need the correct combination to unlock the box.
 
 ### Clues
-A common element in the escape-the-room genre is the visual clue. Often, these visual cues are used with visual elements to solve puzzles. in Cardinal Escape, the visual cues will support the entire puzzle.
+A common element in the escape-the-room genre is the visual clue. Often, these visual cues are used with visual elements to solve puzzles. in Cardinal Escape, the visual cues will support the entire puzzle. Some of the clues will be encoded to add a layer of complexity. For instance, the clues on the wall (and maybe others) will be in binary. In addition to the clues on the wall there will be a clue that will help the player realize the importance of the cardinal directions and how they play into the code combination on the lockbox.
 
-## Walkthrough
+### Computer terminal with binary program.
+There will be a computer in the game that can decode the binary that will show up in the game so the player won't have to break from the experience if they do not have to. Design choices will need to be made to entice the player to use the terminal if at all possible.
 
-The player will start the game facing north. 
+## Beginning of Game
+The player will start the game facing north. At this point in time. As game development continues and systems begin to add on top of one another, more of the details will be set in stone.
