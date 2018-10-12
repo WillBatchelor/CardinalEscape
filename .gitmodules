@@ -1,0 +1,3 @@
+[submodule "worgle"]
+	path = worgle
+	url = git://www.github.com/OrgTangle/worgle
