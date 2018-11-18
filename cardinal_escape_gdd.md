@@ -2,9 +2,13 @@
 
 ## Last Updated: 10/09/2018
 
-## Design Problem Statement: Create an "escape the room" game involving cardinal directions.
+## Design Problem Statement: Create an "escape the room" game that satisfies the following criteria:
 
-## Theme: navigating and exploring a strange place using a compas
+- The mechanics must engage the player's curiosity
+- The mechanics must reward the player's curiosity
+- Where game elements are placed within the game space must matter
+
+## Theme: navigating and exploring a strange place 
 
 ## Setup
 The player wakes up dazed and confused in the dark. He/She feels objects in their pockets. 
@@ -14,27 +18,43 @@ the door. He/She runs up to the door and attempts to open the door. *Rattle ratt
 "Good luck navigating out of this one nerd." - K
 
 ## Overview
-Cardinal Escape is a text-based game in the "escape-the-room" genre. The game utilizes a library commonly known for being used for the game NetHack: the ncurses library. Unlike most traditional escape games where players use and combine objects throughout the room to solve puzzles, the player will have to rely on using visual clues to solve puzzles. For instance, players will have to figure out the order the numbers go in a combination based on which wall the numbers are on.
+Cardinal Escape is a text-based game in the "escape-the-room" genre. The game utilizes a library commonly
+known for being used for the game NetHack: the ncurses library. Unlike most traditional escape game
+where players use and combine objects throughout the room to solve puzzles, the player will have to rely
+on using visual clues to solve puzzles. For instance, players will have to figure out the order the 
+numbers go in a combination based on which wall the numbers are on.
 
 ## Mechanics & Elements
 
-### Movement & Compas
-Movement will be dictated by typed commands. To fit the orienteering theme the commands will dictate which cardinal direction the player will face next. The compas is designed to let the character know which direction faces which cardinal direction. If the player is facing the north wall and wants to face the East wall they will type in east.
+### Game Display
+The game display will be a rectangle intersected using a vertical partition dividing the rectangle into two
+equally sized squares. The left square will be the game space and the right a window to display text. The
+game space will be in two dimensions and the asthetics of the game will be reminicent of NetHack. The
+player will be represented by an "@" ascii symbol. Other elements in the game space will be represented
+by other ASCII characters.
 
-### Examining & Flashlight
-Once the player orients to a wall the game will do either of the following depending on design direction:
+### Movement
+The player will move the character avatar around the game space using vi style navigation (hjkl).
 
-- describe what is on the wall and will ask the player to choose what they want to examine
-- use the ascii graphical capabilities of ncurses to display important information but give the player the option to choose what they can focus on with the flashlight
+
+### Examining
+A player interacts with most (if not all) of the elements of the game by examining them. The player can examine an item/element by moving the player on top of the the square with that element. When the player 
+avatar is on the same square of the game space as an element a discription of it is drawn on the window to 
+the the right of the game space.
 
 ### Key & Lockbox
-A key is the only usable object that can be picked up and used by the player. The key will be obtained at the end of the game to unock the door and escape the room. The key will be in a locked strongbox with an 8 digit keypad. The player will need the correct combination to unlock the box.
+**The following is an element that may ultimately not be used in the final product:**
+A key is the only usable object that can be picked up and used by the player. The key will be obtained at 
+the end of the game to unock the door and escape the room. The key will be in a locked strongbox with an 8
+digit keypad. The player will need the correct combination to unlock the box.
 
 ### Clues
 A common element in the escape-the-room genre is the visual clue. Often, these visual cues are used with visual elements to solve puzzles. in Cardinal Escape, the visual cues will support the entire puzzle. Some of the clues will be encoded to add a layer of complexity. For instance, the clues on the wall (and maybe others) will be in binary. In addition to the clues on the wall there will be a clue that will help the player realize the importance of the cardinal directions and how they play into the code combination on the lockbox.
 
 ### Computer terminal with binary program.
+**The following is an element that may ultimately not be used in the final product:**
 There will be a computer in the game that can decode the binary that will show up in the game so the player won't have to break from the experience if they do not have to. Design choices will need to be made to entice the player to use the terminal if at all possible.
 
-## Beginning of Game
-The player will start the game facing north. At this point in time. As game development continues and systems begin to add on top of one another, more of the details will be set in stone.
+## Minimum Viable Product (MVP)
+The MVP will consist of the two windows, the avatar that can move around the game space, and an item that
+can be examined.
