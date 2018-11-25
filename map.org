@@ -1,0 +1,18 @@
+* The Map
+This section will outline the overall map of the Cardinal Escape game.
+The map is the world our player will navigate, discover, and change in order
+to escape. Conceptually, the world is a rectangular grid composed of tiles.
+At any given point in time, our hero is on exactly one tile.
+** The Tile
+To start things off, we will consider the Tile: the smallest component of the
+map.
+What are some things we want to do with a tile?
+- Walk onto it
+- Have stuff happen when you walk onto it
+- Have stuff happen when you do something to it when you press it
+- Have items stored on it
+- Have states/switches stored on it
+- Be able to print messages
+** The Grid
+The grid is a collection of Tiles. This is a fixed amount of tiles statically
+allocated. The foundation of the grid creates the map.

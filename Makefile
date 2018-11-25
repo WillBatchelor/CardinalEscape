@@ -1,4 +1,5 @@
 WORGLE=worgle/worgle
+SORG=worgle/sorg
 
 CFLAGS = -Wall -pedantic -O2 -std=c89
 
@@ -6,7 +7,7 @@ LDFLAGS=-lncurses
 
 default: all
 
-all: $(WORGLE) hello
+all: $(WORGLE) $(SORG) hello
 
 hello.c: hello.org
 	$(WORGLE) -g $<
@@ -16,6 +17,9 @@ hello: hello.o
 
 $(WORGLE):
 	cd worgle; make
+
+$(SORG):
+	cd worgle; make sorg
 
 clean:
 	$(RM) hello.c hello.o hello

@@ -1,0 +1,46 @@
+* Introduction
+Welcome, Friend, to Cardinal Escape. This is a small escape-the-room game with
+an emphasis on exploration, Rogue-like maps, and puzzles. This game will be
+written in C using the ncurses library, and aims to be portable on any
+Unix-capable system, including MSYS2 (Windows), Linux, and OSX Darwin.
+** Literate Programming
+The core components of this game have been written in a paradigm of programming
+known as literate programming. The goal here is to place an empahsis on using
+natural language semantics to develop and articulate what the program is doing.
+This document is written in Org markdown that is compataible with Org-mode via
+Emacs. It is compiled using the program Worgle, a creation by one of the authors
+of this game.
+** How this game was written
+Before one attempts to read this document, it may be helpful to understand the
+process of *writing* the document beforehand. At the time of writing, not a
+single line of code has been written for this game. Instead, the components
+have been (are being) written in plain English first as concepts. From there,
+the code will fall in place. This words-before-code approach is done in the name
+of software elegance and thoughtful software design: once code has been written,
+it can only be molded. Writing things down forces the programmer to be
+more thoughtful in the design, which down the line leads to better foundations
+in the program.
+** Game Structure Overview
+This game is about the player versus the map she is on. The hope is that the
+program structure mimics this as well. The map is a 2d grid of tiles, which
+contain events, states, and triggers. The player moves around the map, turning
+on triggers, and collecting items in their inventory.
+
+To keep the program simple and a bit less prone to segfaults, no in-game
+dynamic memory allocation will be used. All maps, items, and resources will be
+allocated at the start of the game (either using stack or heap memory) and then
+freed (if needed) at the end of the game. Every item or "thing" that inhabits
+the game map will be known as a *resource*. Both the world and the resources
+of that world will be finite, just like how it works in our world.
+* Top-level
+This section is a meta-file which sets up the general constructs
+of the program. These constructs defined here will be populated in the sections
+that follow this one.
+** Header File (public)
+The public header file contains all function defintions and forward typedef
+declarations. This file will be called =cardinalescape.h=.
+** Header File (private)
+The private header file contains all struct declarations.
+** Top-level code
+The top level code is the Worgle amalgamation of all written code. This
+file will be called =cardinalescape.c=.
