@@ -1,0 +1,2 @@
+* Resources
+Anything that is a *thing* is a resource.

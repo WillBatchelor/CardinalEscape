@@ -1,0 +1,34 @@
+* Display
+This section will describe how Cardinal Escape displays things onto the screen.
+Cardinal Escape is a terminal game, so our primitives are limited to printable
+ascii characters instead of pixels. Because of this, there are limits to
+what we can draw, and how we can draw it.
+** Resolution
+First consideration is display resolution: what big will it get? The unit
+we must think in is in terms of characters. In a way, characters can be
+thought of as tiles. Each inidivual character can carry some semantic weight
+like game tiles can. Also, they are about the same size as well!
+In programming, the ideal width of a line is approximately 80 characters wide.
+
+The line below is 80 +'s wide:
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+This is probably the maximum width we want to consider for our game.
+
+ASCII Characters tend to be long rectangles instead of squares, so this means
+the display height is going to be smaller than our width. A display height
+should be no larger than 20 characters.
+
+In conclusion, our display resolution should be no larger than 80x20, and it
+should be fixed as well.
+** The Display Buffer
+The outer edges of our display interface should be pretty dumb. That is to say,
+it should have zero awareness of the game state, and should only be concerned
+with drawing characters onto the screen. This can be done with a
+=display buffer=.
+
+A display buffer is a chunk of memory that is used to paint
+characters on a screen using ncurses calls. When an aspect of the program wants
+to display something on the screen, it will write to the corresponding location
+in the display buffer.

@@ -1,0 +1,9 @@
+* Input
+This section will discuss how input in Cardinal Escape is handled. Input
+events come exclusively from keyboard input.
+The input hanlder will handle every incoming key press from the keyboard,
+and then do some action based on what key was pressed and the current game
+state. Any action will change the game state in some way. When the game
+state is changed, the display will update as well. As a result, the movement
+of time in the game is driven exclusively by the user input. This is a game
+design pattern adopted from Rogue-like games.
