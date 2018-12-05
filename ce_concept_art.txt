@@ -46,7 +46,7 @@ The dialogue box may go here
 |                                      ||                                      |
 +------------------------------------------------------------------------------+
 
-      @ = Player Avater
+      @ = Player Avatar
 
       n = Note
 
@@ -79,4 +79,4 @@ I bet you can't even find the light switch." On the back is basic jigsaw puzzle
 instructions that say: "When putting together a jigsaw puzzle it is best to 
 look for the corner pieces first."
 
-      @ = Player Avater
+      @ = Player Avatar
