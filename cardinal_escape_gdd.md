@@ -1,6 +1,6 @@
 # Cardinal Escape Design Document
 
-## Last Updated: 10/09/2018
+## Last Updated: 12/05/2018
 
 ## Design Problem Statement: Create an "escape the room" game that satisfies the following criteria:
 
@@ -27,33 +27,32 @@ numbers go in a combination based on which wall the numbers are on.
 ## Mechanics & Elements
 
 ### Game Display
-The game display will be a rectangle intersected using a vertical partition dividing the rectangle into two
-equally sized squares. The left square will be the game space and the right a window to display text. The
-game space will be in two dimensions and the asthetics of the game will be reminicent of NetHack. The
-player will be represented by an "@" ascii symbol. Other elements in the game space will be represented
-by other ASCII characters.
+The game display will be an 80x20 character rectangle intersected using a vertical partition dividing the rectangle into two
+equally sized squares. The left square will be the game space or "map" the player will navigate and the
+right a window to display a dialog box and the help screen. The game space will be in two dimensions and the asthetics of the game will be reminicent of 
+NetHack. The player will be represented by an "@" ascii symbol. Other elements in the game space will be 
+represented by other ASCII characters.
 
 ### Movement
 The player will move the character avatar around the game space using vi style navigation (hjkl).
 
+### Map
+The game map consists of "tiles". When the player inputs a navigational key the player "moves" to the
+respective tile based on which navigational key is pressed (h causes the player to go to the tile to the left of where the avitar, l to the right and so on). The player avatar can only take up one tile at a time.
 
-### Examining
-A player interacts with most (if not all) of the elements of the game by examining them. The player can examine an item/element by moving the player on top of the the square with that element. When the player 
-avatar is on the same square of the game space as an element a discription of it is drawn on the window to 
-the the right of the game space.
+
+### Examining, Picking Up, Using
+Other than moving, the player interacts with the game map in one of three ways at a time: examining,
+picking up, and using. With any object on the map the player can examine it by moving to the tile the
+object is on and it's description will show up on the right screen. 
+
+ The player can examine an item/element by moving the avatar to the tile the item/element is on.  When the player avatar is on the same square of the game space as an element a discription of it is drawn on the window to the the right of the game space.
 
 ### Key & Lockbox
 **The following is an element that may ultimately not be used in the final product:**
 A key is the only usable object that can be picked up and used by the player. The key will be obtained at 
 the end of the game to unock the door and escape the room. The key will be in a locked strongbox with an 8
 digit keypad. The player will need the correct combination to unlock the box.
-
-### Clues
-A common element in the escape-the-room genre is the visual clue. Often, these visual cues are used with visual elements to solve puzzles. in Cardinal Escape, the visual cues will support the entire puzzle. Some of the clues will be encoded to add a layer of complexity. For instance, the clues on the wall (and maybe others) will be in binary. In addition to the clues on the wall there will be a clue that will help the player realize the importance of the cardinal directions and how they play into the code combination on the lockbox.
-
-### Computer terminal with binary program.
-**The following is an element that may ultimately not be used in the final product:**
-There will be a computer in the game that can decode the binary that will show up in the game so the player won't have to break from the experience if they do not have to. Design choices will need to be made to entice the player to use the terminal if at all possible.
 
 ## Minimum Viable Product (MVP)
 The MVP will consist of the two windows, the avatar that can move around the game space, and an item that
