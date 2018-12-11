@@ -1,2 +1,13 @@
 * Resources
 Anything that is a *thing* is a resource.
+
+Some truths about resources:
+
+- They either exist somewhere on the map, or they are "held" by the avatar
+- There is a finite number of resources. They exist in exactly one place.
+- All resources can be "applied" to other resources, or map locations. Stuff
+may or may not happen
+
+Essentially, these are doubly linked lists. All resources are allocated at
+runtime, and then they are assigned to be specific items and things. Resources
+are "stacked" on top of one and another.
