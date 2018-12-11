@@ -1,16 +1,28 @@
+.PHONY: html
+
 WORGLE=worgle/worgle
 SORG=worgle/sorg
 
-CFLAGS = -Wall -pedantic -O2 -std=c89
+CFLAGS = -Wall -pedantic -O3 -std=c89
 
 LDFLAGS=-lncurses
 
+ORGS=top.org res.org display.org input.org map.org
+
+OBJ=cardinalescape.o
+
 default: all
 
-all: $(WORGLE) $(SORG) hello
+all: $(WORGLE) $(SORG) cardinalescape
 
-hello.c: hello.org
-	$(WORGLE) -g $<
+%.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
+cardinalescape.c: $(ORGS)
+	$(WORGLE) -Werror -g $(ORGS)
+
+cardinalescape: $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
 
 hello: hello.o
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
@@ -21,6 +33,18 @@ $(WORGLE):
 $(SORG):
 	cd worgle; make sorg
 
+html: cardinalescape.html cardinalescape_toc.html
+
+cardinalescape.html: $(ORGS) $(SORG)
+	cat $(ORGS) | $(SORG) > $@
+
+cardinalescape_toc.html: $(ORGS) $(SORG)
+	cat $(ORGS) | $(SORG) -t cardinalescape.html > $@
+
 clean:
-	$(RM) hello.c hello.o hello
 	cd worgle; make clean;
+	$(RM) cardinalescape.html
+	$(RM) cardinalescape_toc.html
+	$(RM) $(OBJ)
+	$(RM) cardinalescape.h cardinalescape_private.h
+	$(RM) cardinalescape.c
