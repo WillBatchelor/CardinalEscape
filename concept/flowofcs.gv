@@ -1,0 +1,4 @@
+digraph G {
+	Game Startup Position -> Pick up desk key
+	-> Use desk key on desk drawer -> pick uplighting remote from drawer -> Use lighting remote to find hidden message -> read hidden message -> get password -> use password on terminal -> Unlock cabinet -> Get pick from cabinet -> Use pick on floor cracks -> Get piecs of paper -> Read pieces of paper -> Get combo -> Use combo on keypad -> Unlock door -> Open door and escape
+	{
