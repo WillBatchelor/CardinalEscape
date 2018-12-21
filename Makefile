@@ -41,6 +41,9 @@ cardinalescape.html: $(ORGS) $(SORG)
 cardinalescape_toc.html: $(ORGS) $(SORG)
 	cat $(ORGS) | $(SORG) -t cardinalescape.html > $@
 
+bin2num: bin2num.c
+	$(CC) $(CFLAGS) $< -o $@
+
 clean:
 	cd worgle; make clean;
 	$(RM) cardinalescape.html
@@ -48,3 +51,4 @@ clean:
 	$(RM) $(OBJ)
 	$(RM) cardinalescape.h cardinalescape_private.h
 	$(RM) cardinalescape.c
+	$(RM) bin2num
