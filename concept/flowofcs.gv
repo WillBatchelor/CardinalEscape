@@ -1,4 +1,20 @@
 digraph G {
-	Game Startup Position -> Pick up desk key
-	-> Use desk key on desk drawer -> pick uplighting remote from drawer -> Use lighting remote to find hidden message -> read hidden message -> get password -> use password on terminal -> Unlock cabinet -> Get pick from cabinet -> Use pick on floor cracks -> Get piecs of paper -> Read pieces of paper -> Get combo -> Use combo on keypad -> Unlock door -> Open door and escape
-	{
+	/* Graph to outline Cardinal Escape Game Flow
+		12/20/2018 */
+		
+	"Game Startup Position" -> "Pick up desk key" 
+	-> "Use desk key on desk drawer" -> 
+	"Pick up lighting remote from drawer" -> 
+	"Use lighting remote to find hidden messages" -> 
+	"Read hidden messages" -> "Get password" -> "Use 
+	password on terminal" -> "Unlock cabinet" -> "Get 
+	pick from cabinet" -> "Use pick on floor cracks" 
+	-> "Get piecs of paper" -> "Read pieces of paper" 
+	-> "Get combo" -> "Use combo on keypad" -> "Unlock 
+	door" -> "Open door and escape";
+	"Game Startup Position" -> "Pick up note" -> "Read note";
+	"Read note" -> "Read hidden messages" [style=dotted];
+	"Game Startup Position" -> "Pick up decoder ring" -> "Use decoder ring";
+	"Use decoder ring" -> "Read note" [style=dotted];
+	"Use decoder ring" -> "Get password";
+	}
