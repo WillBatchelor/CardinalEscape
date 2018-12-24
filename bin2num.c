@@ -10,7 +10,7 @@
 
 
 /* Uncomment this macro to make testing exit out immediately after a failure */
-/* #define HARDCHECK */
+#define HARDCHECK 
 
 
 #ifdef HARDCHECK
