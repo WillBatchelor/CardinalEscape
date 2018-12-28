@@ -7,3 +7,28 @@ state. Any action will change the game state in some way. When the game
 state is changed, the display will update as well. As a result, the movement
 of time in the game is driven exclusively by the user input. This is a game
 design pattern adopted from Rogue-like games.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_input_process(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_input_process(cardinal_d *c)
+{
+    int x;
+    x = getch();
+
+    switch(c->mode) {
+        case MODE_WELCOME:
+            break;
+        default:
+            if(x == 'q') {
+                cardinal_stop_running(c);
+            }
+            break;
+    }
+
+}
+#+END_SRC

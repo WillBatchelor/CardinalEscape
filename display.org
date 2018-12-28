@@ -22,6 +22,24 @@ should be no larger than 20 characters.
 
 In conclusion, our display resolution should be no larger than 80x20, and it
 should be fixed as well.
+*** Checking the resolution.
+The screen resolution is checked with the function =cardinal_check_resolution=.
+#+NAME: function_declarations
+#+BEGIN_SRC c
+int cardinal_check_resolution(int min_width, int min_height);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+int cardinal_check_resolution(int min_width, int min_height)
+{
+    int w, h;
+    getmaxyx(stdscr, h, w);
+
+    if(w < min_width || h < min_height) return 0;
+    else return 1;
+}
+#+END_SRC
 ** The Display Buffer
 The outer edges of our display interface should be pretty dumb. That is to say,
 it should have zero awareness of the game state, and should only be concerned
@@ -32,3 +50,113 @@ A display buffer is a chunk of memory that is used to paint
 characters on a screen using ncurses calls. When an aspect of the program wants
 to display something on the screen, it will write to the corresponding location
 in the display buffer.
+
+The display buffer is represented as an array of *1620* chars. This number is
+derived from multiplying the width (80 + 1) by the height (20).
+
+The extra one bit is derived so that the mvprintw function can be used to write
+rows to the screen (will be treated as a NULL terminator).
+
+#+NAME: struct_contents
+#+BEGIN_SRC c
+char dbuf[1620];
+#+END_SRC
+
+On init-time, they are zeroed out using the function memset.
+#+NAME: cardinal_init
+#+BEGIN_SRC c
+memset(c->dbuf, 0, 1600);
+#+END_SRC
+** The Top-Level Display Function
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_display(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_display(cardinal_d *c)
+{
+    int line;
+    cardinal_display_clear(c);
+
+    switch(c->mode) {
+        case MODE_WELCOME:
+            cardinal_display_print(c, 0, 0,
+                "Welcome to Cardinal Escape! Hit any key to continue\n");
+            break;
+        default:
+            cardinal_display_print(c, 0, 0,
+                "Good luck getting out of this one, nerd!");
+            break;
+
+    }
+    clear();
+    for(line = 0; line < HEIGHT; line++) {
+        mvprintw(line, 0, c->dbuf + line * (WIDTH + 1));
+    }
+    refresh();
+}
+#+END_SRC
+** Drawing Routines
+*** Display Set
+The lowest level cardinal display function is the set function. This
+function will set a particular character in the buffer. Included in this
+function is bounds checking.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_display_set(cardinal_d *c, int x, int y, char a);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_display_set(cardinal_d *c, int x, int y, char a)
+{
+    if(x >= WIDTH || y >= HEIGHT) return;
+    c->dbuf[y * WIDTH + x] = a;
+}
+#+END_SRC
+*** Display Print
+This function will print a string on a given position. No word wrapping
+happens here.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_display_print(cardinal_d *c, int x, int y, const char *str);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_display_print(cardinal_d *c, int x, int y, const char *str)
+{
+    int len;
+    int s;
+    len = strlen(str);
+
+    for(s = 0; s < len; s++) {
+        cardinal_display_set(c, x + s, y, str[s]);
+    }
+}
+#+END_SRC
+*** Display Clear
+The clear function will zero-out the display buffer.
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_display_clear(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_display_clear(cardinal_d *c)
+{
+    int x;
+    int y;
+
+    for(y = 0; y < HEIGHT; y++) {
+        for(x = 0; x < WIDTH; x++) {
+            cardinal_display_set(c, x, y, 0);
+        }
+    }
+}
+#+END_SRC
