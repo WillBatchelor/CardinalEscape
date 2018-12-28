@@ -42,7 +42,7 @@ cardinalescape_toc.html: $(ORGS) $(SORG)
 	cat $(ORGS) | $(SORG) -t cardinalescape.html > $@
 
 bin2num: bin2num.c
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@ -lm
 
 clean:
 	cd worgle; make clean;
