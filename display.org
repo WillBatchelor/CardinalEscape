@@ -82,8 +82,9 @@ void cardinal_display(cardinal_d *c)
 
     switch(c->mode) {
         case MODE_WELCOME:
-            cardinal_display_print(c, 2, 1,
-                                   "Welcome to Cardinal Escape! Hit any key to continue\n");
+            /* cardinal_display_print(c, 2, 1, */
+            /*                        "Welcome to Cardinal Escape! Hit any key to continue\n"); */
+            cardinal_draw_splash(c);
             break;
         default:
             cardinal_draw_borders(c);
@@ -285,5 +286,44 @@ void cardinal_draw_avatar(cardinal_d *c);
 void cardinal_draw_avatar(cardinal_d *c)
 {
     cardinal_display_set(c, c->avatar_x + 1, c->avatar_y + 1, '@');
+}
+#+END_SRC
+*** Draw Splash
+The splash screen is contained in a file called =banner.txt=, converted
+to a header file using the xxd utility.
+
+#+NAME:function_declarations
+#+BEGIN_SRC c
+void cardinal_draw_splash(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+
+#ifndef CARDINAL_BANNER_H
+#define CARDINAL_BANNER_H
+#include "banner.h"
+#endif
+
+void cardinal_draw_splash(cardinal_d *c)
+{
+    unsigned int n;
+    int row, col;
+    row = 0;
+    col = 0;
+    for(n = 0; n < banner_txt_len; n++) {
+        if(banner_txt[n] == '\n') {
+            row++;
+            col = 0;
+        } else {
+            cardinal_display_set(c, col, row, banner_txt[n]);
+        }
+
+        col++;
+        if(col == 80) {
+            row++;
+            col = 0;
+        }
+    }
 }
 #+END_SRC
