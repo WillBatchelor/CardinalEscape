@@ -87,6 +87,7 @@ void cardinal_display(cardinal_d *c)
             break;
         default:
             cardinal_draw_borders(c);
+            cardinal_draw_avatar(c);
             cardinal_display_message(c,
                                      "Good luck getting out of this one, nerd!");
             break;
@@ -269,5 +270,20 @@ void cardinal_draw_borders(cardinal_d *c)
         cardinal_display_set(c, center - 1, n, '|');
         cardinal_display_set(c, center, n, '|');
     }
+}
+#+END_SRC
+*** Draw Avatar
+The avatar is drawn onto the map using the function =cardinal_draw_avatar=.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_draw_avatar(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_draw_avatar(cardinal_d *c)
+{
+    cardinal_display_set(c, c->avatar_x + 1, c->avatar_y + 1, '@');
 }
 #+END_SRC

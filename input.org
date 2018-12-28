@@ -27,6 +27,20 @@ void cardinal_input_process(cardinal_d *c)
             if(x == 'q') {
                 cardinal_stop_running(c);
             }
+            switch(x) {
+                case 'h':
+                    cardinal_avatar_move(c, -1, 0);
+                    break;
+                case 'j':
+                    cardinal_avatar_move(c, 0, 1);
+                    break;
+                case 'k':
+                    cardinal_avatar_move(c, 0, -1);
+                    break;
+                case 'l':
+                    cardinal_avatar_move(c, 1, 0);
+                    break;
+            }
             break;
     }
 
