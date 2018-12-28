@@ -92,7 +92,6 @@ void cardinal_display(cardinal_d *c)
             break;
 
     }
-    clear();
     for(line = 0; line < HEIGHT; line++) {
         mvprintw(line, 0, c->dbuf + (line * (WIDTH + 1)));
     }
