@@ -151,27 +151,68 @@ void cardinal_display_message(cardinal_d *c, const char *str);
 
 #+NAME: functions
 #+BEGIN_SRC c
+static void print_word(cardinal_d *c,
+                       const char *w, int size,
+                       int row, int col,
+                       int offx, int offy)
+{
+    int n;
+    for(n = 0; n < size; n++) {
+        cardinal_display_set(c, col + n + offx, row + offy, w[n]);
+    }
+}
+
+static int word_exceeds_bounds(const char *w, int size, int pos, int mw)
+{
+    if((pos + size) > mw) return 1;
+    return 0;
+}
 
 void cardinal_display_message(cardinal_d *c, const char *str)
 {
-    int display_off_x;
-    int display_off_y;
+    int off_x;
+    int off_y;
     int size;
-    const char *buf;
-    int buflen;
+    const char *word_start;
+    int word_size;
     int n;
+    char prev;
+    int col;
+    int row;
+    int max_width;
 
-    display_off_x = 41;
-    display_off_y = 1;
+    max_width = 37;
+    off_x = 42;
+    off_y = 1;
     size = strlen(str);
-    cardinal_display_print(c, display_off_x, display_off_y, str);
-    buf = str;
-    buf = &str[1];
-    buflen = 0;
-    for(n = 0; n < size; n++) {
-        buflen++;
-    }
 
+    word_start = str;
+    word_size = 0;
+    prev = 0;
+    row = 0;
+    col = 0;
+    for(n = 0; n < size; n++) {
+        if(str[n] == ' ')  {
+            if(word_exceeds_bounds(word_start, word_size, col, max_width)) {
+                row++;
+                col = 0;
+            }
+            print_word(c, word_start, word_size, row, col, off_x, off_y);
+            col += word_size + 1;
+            cardinal_display_set(c, col + off_x, row + off_y, ' ');
+        } else if (prev == ' ' && str[n] != ' ') {
+            word_size = 0;
+            word_start = &str[n];
+        }
+
+        prev = str[n];
+        word_size++;
+    }
+    if(word_exceeds_bounds(word_start, word_size, col, max_width)) {
+        row++;
+        col = 0;
+    }
+    print_word(c, word_start, word_size, row, col, off_x, off_y);
 }
 #+END_SRC
 
