@@ -8,6 +8,7 @@
 
 #define YES 1
 #define NO 0
+#define MAX_LEN 32
 
 
 /* Uncomment this macro to make testing exit out immediately after a failure */
@@ -106,7 +107,7 @@ static int test_binary_string(const char *str, int ndigits, int expected)
     return PASS;
 }
 
-static int test_program(void)
+int test_program(void)
 {
     int rc;
     int tmp;
@@ -161,9 +162,15 @@ static int test_program(void)
         fprintf(stdout, "Oops! Looks like some tests failed.\n");
         return -1;
     }
-}
+} 
 
 int main(int argc, char *argv[])
 {
-    return test_program();
+	char a_word[MAX_LEN];
+
+	printf ("Welcome to the Cardinal Binary Converter. Please input a binary string: ");
+	scanf ("%s", a_word);
+	printf ("You entered: %s\n", a_word);
+	return 0;
+	/* return test_program(); */
 }

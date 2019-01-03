@@ -13,7 +13,7 @@ OBJ=cardinalescape.o
 
 default: all
 
-all: $(WORGLE) $(SORG) cardinalescape
+all: $(WORGLE) $(SORG) cardinalescape bin2num
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
