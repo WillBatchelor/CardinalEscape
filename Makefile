@@ -13,7 +13,7 @@ OBJ=cardinalescape.o
 
 default: all
 
-all: $(WORGLE) $(SORG) cardinalescape bin2num
+all: $(WORGLE) $(SORG) cardinalescape bin2num banner.h
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
@@ -40,6 +40,9 @@ cardinalescape.html: $(ORGS) $(SORG)
 
 cardinalescape_toc.html: $(ORGS) $(SORG)
 	cat $(ORGS) | $(SORG) -t cardinalescape.html > $@
+
+banner.h: banner.txt
+	xxd -i $< > $@
 
 bin2num: bin2num.c
 	$(CC) $(CFLAGS) $< -o $@ -lm

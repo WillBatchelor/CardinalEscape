@@ -221,3 +221,82 @@ void cardinal_update(cardinal_d *c)
     }
 }
 #+END_SRC
+*** Avatar State
+The avatar is the player on the screen. The current player position is
+stored as an xy pair.
+
+#+NAME: struct_contents
+#+BEGIN_SRC c
+int avatar_x;
+int avatar_y;
+#+END_SRC
+
+By default, it is initialized to be (0, 0).
+
+#+NAME: cardinal_init
+#+BEGIN_SRC c
+c->avatar_x = 0;
+c->avatar_y = 0;
+#+END_SRC
+
+The avatar XY coordinates can be set with the function =cardinal_avatar_set=.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_avatar_set(cardinal_d *c, int x, int y);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_avatar_set(cardinal_d *c, int x, int y)
+{
+    c->avatar_x = x;
+    c->avatar_y = y;
+}
+#+END_SRC
+
+The avatar can be moved by a certain amount using the function
+=cardinal_avatar_move=.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_avatar_move(cardinal_d *c, int dx, int dy);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_avatar_move(cardinal_d *c, int dx, int dy)
+{
+    c->avatar_x += dx;
+    c->avatar_y += dy;
+    cardinal_avatar_fix_bounds(c);
+}
+#+END_SRC
+
+If the avatar goes out of bounds, they can be corrected with the function
+=cardinal_avatar_fix_bounds=.
+
+The maximum width/height are macros =MAX_WIDTH= and =MAX_HEIGHT=.
+
+#+NAME: macros
+#+BEGIN_SRC c
+#define MAX_WIDTH 38
+#define MAX_HEIGHT 38
+#+END_SRC
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_avatar_fix_bounds(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_avatar_fix_bounds(cardinal_d *c)
+{
+    if(c->avatar_x < 0) c->avatar_x = 0;
+    if(c->avatar_x >= MAX_WIDTH) c->avatar_x = MAX_WIDTH - 1;
+
+    if(c->avatar_y < 0) c->avatar_y = 0;
+    if(c->avatar_y >= MAX_HEIGHT) c->avatar_x = MAX_HEIGHT - 1;
+}
+#+END_SRC
