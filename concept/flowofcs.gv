@@ -3,8 +3,8 @@ digraph G {
 		12/20/2018 */
 		
 	"Game Startup Position" -> "Read note" 
-	-> "Get binary message" -> "decode binary message on terminal" ->  get combo for briefcase
-	-> Unlock briefcase with combo -> "Pick up lighting remote from breifcase" -> 
+	-> "Get binary message" -> "decode binary message on terminal" ->  "get combo for briefcase"
+	-> "Unlock briefcase with combo" -> "Pick up lighting remote from breifcase" -> 
 	"Use lighting remote to find hidden messages" -> 
 	"Read hidden messages" -> "Get password" -> "Use 
 	password on terminal" -> "Unlock cabinet" -> "Get 
