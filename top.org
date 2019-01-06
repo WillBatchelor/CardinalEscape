@@ -43,6 +43,8 @@ declarations. This file will be called =cardinalescape.h=.
 #+BEGIN_SRC c :tangle cardinalescape.h
 #ifndef CARDINAL_ESCAPE_H
 #define CARDINAL_ESCAPE_H
+<<typedefs>>
+<<function_declarations>>
 #endif
 #+END_SRC
 ** Header File (private)
@@ -52,6 +54,7 @@ The private header file contains all struct declarations.
 #+BEGIN_SRC c :tangle cardinalescape_private.h
 #ifndef CARDINAL_ESCAPE_PRIVATE_H
 #define CARDINAL_ESCAPE_PRIVATE_H
+<<structs>>
 #endif
 #+END_SRC
 ** Top-level code
@@ -62,17 +65,238 @@ Right now, it just mirrors the "hello world" script.
 #+NAME: top
 #+BEGIN_SRC c :tangle cardinalescape.c
 #include <ncurses.h>
+#include <string.h>
 #include "cardinalescape.h"
 #include "cardinalescape_private.h"
 
+<<macros>>
+
+#define WIDTH 80
+#define HEIGHT 20
+
+<<functions>>
+
 int main(int argc, char *argv[])
 {
+    cardinal_d card;
+    cardinal_init(&card);
     initscr();
     curs_set(0); /* hide the cursor */
-    printw("Good luck getting out of this one, nerd!");
-    refresh();
-    getch();
+    noecho();
+
+    if(!cardinal_check_resolution(WIDTH, HEIGHT)) {
+        mvprintw(0, 0, "Improper resolution. Quitting.");
+        endwin();
+    }
+
+    while(cardinal_is_running(&card)) {
+        cardinal_display(&card);
+        cardinal_input_process(&card);
+        cardinal_update(&card);
+    }
+
     endwin();
     return 0;
+}
+#+END_SRC
+** Top Level struct
+All of the game state is stored in a top-level struct called =cardinal_d=.
+#+NAME:typedefs
+#+BEGIN_SRC c
+typedef struct cardinal_d cardinal_d;
+#+END_SRC
+
+#+NAME: structs
+#+BEGIN_SRC c
+struct cardinal_d {
+    <<struct_contents>>
+};
+#+END_SRC
+*** Top-Level Struct Initialization
+The top-level struct is initialized with the function =cardinal_init=.
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_init(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_init(cardinal_d *c)
+{
+    <<cardinal_init>>
+}
+#+END_SRC
+
+#+NAME: struct_contents
+#+BEGIN_SRC c
+int is_running;
+#+END_SRC
+
+#+NAME: cardinal_init
+#+BEGIN_SRC c
+c->is_running = 1;
+#+END_SRC
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+int cardinal_is_running(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+int cardinal_is_running(cardinal_d *c)
+{
+    return c->is_running;
+}
+#+END_SRC
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_stop_running(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_stop_running(cardinal_d *c)
+{
+    c->is_running = 0;
+}
+#+END_SRC
+*** Modes
+Game modes are stored in an integer called =mode=.
+#+NAME: struct_contents
+#+BEGIN_SRC c
+int mode;
+#+END_SRC
+
+Mode states are stored inside of an enum.
+
+#+NAME: macros
+#+BEGIN_SRC c
+enum {
+<<modes>>
+MODE_NONE
+};
+#+END_SRC
+
+By default, the game state is set to be =MODE_WELCOME=, which
+will draw a welcome screen.
+
+#+NAME: cardinal_init
+#+BEGIN_SRC c
+c->mode = MODE_WELCOME;
+#+END_SRC
+
+#+NAME: modes
+#+BEGIN_SRC c
+MODE_WELCOME,
+#+END_SRC
+
+Normal runtime is done using the mode =MODE_NORMAL=.
+
+#+NAME: modes
+#+BEGIN_SRC c
+MODE_NORMAL,
+#+END_SRC
+
+Game state is updated at the end of the game loop with a function called
+=cardinal_update=.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_update(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_update(cardinal_d *c)
+{
+    switch(c->mode) {
+        case MODE_WELCOME:
+            c->mode = MODE_NORMAL;
+            break;
+        default:
+            break;
+
+    }
+}
+#+END_SRC
+*** Avatar State
+The avatar is the player on the screen. The current player position is
+stored as an xy pair.
+
+#+NAME: struct_contents
+#+BEGIN_SRC c
+int avatar_x;
+int avatar_y;
+#+END_SRC
+
+By default, it is initialized to be (0, 0).
+
+#+NAME: cardinal_init
+#+BEGIN_SRC c
+c->avatar_x = 0;
+c->avatar_y = 0;
+#+END_SRC
+
+The avatar XY coordinates can be set with the function =cardinal_avatar_set=.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_avatar_set(cardinal_d *c, int x, int y);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_avatar_set(cardinal_d *c, int x, int y)
+{
+    c->avatar_x = x;
+    c->avatar_y = y;
+}
+#+END_SRC
+
+The avatar can be moved by a certain amount using the function
+=cardinal_avatar_move=.
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_avatar_move(cardinal_d *c, int dx, int dy);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_avatar_move(cardinal_d *c, int dx, int dy)
+{
+    c->avatar_x += dx;
+    c->avatar_y += dy;
+    cardinal_avatar_fix_bounds(c);
+}
+#+END_SRC
+
+If the avatar goes out of bounds, they can be corrected with the function
+=cardinal_avatar_fix_bounds=.
+
+The maximum width/height are macros =MAX_WIDTH= and =MAX_HEIGHT=.
+
+#+NAME: macros
+#+BEGIN_SRC c
+#define MAX_WIDTH 38
+#define MAX_HEIGHT 38
+#+END_SRC
+
+#+NAME: function_declarations
+#+BEGIN_SRC c
+void cardinal_avatar_fix_bounds(cardinal_d *c);
+#+END_SRC
+
+#+NAME: functions
+#+BEGIN_SRC c
+void cardinal_avatar_fix_bounds(cardinal_d *c)
+{
+    if(c->avatar_x < 0) c->avatar_x = 0;
+    if(c->avatar_x >= MAX_WIDTH) c->avatar_x = MAX_WIDTH - 1;
+
+    if(c->avatar_y < 0) c->avatar_y = 0;
+    if(c->avatar_y >= MAX_HEIGHT) c->avatar_x = MAX_HEIGHT - 1;
 }
 #+END_SRC

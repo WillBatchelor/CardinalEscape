@@ -24,7 +24,7 @@ where players use and combine objects throughout the room to solve puzzles, the 
 on using visual clues to solve puzzles. For instance, players will have to figure out the order the 
 numbers go in a combination based on which wall the numbers are on.
 
-## Mechanics & Elements
+## Basic Mechanics
 
 ### Game Display
 The game display will be an 80x20 character rectangle intersected using a vertical partition dividing the rectangle into two
@@ -48,11 +48,22 @@ object is on and it's description will show up on the right screen.
 
  The player can examine an item/element by moving the avatar to the tile the item/element is on.  When the player avatar is on the same square of the game space as an element a discription of it is drawn on the window to the the right of the game space.
 
-### Key & Lockbox
-**The following is an element that may ultimately not be used in the final product:**
-A key is the only usable object that can be picked up and used by the player. The key will be obtained at 
-the end of the game to unock the door and escape the room. The key will be in a locked strongbox with an 8
-digit keypad. The player will need the correct combination to unlock the box.
+## Game Elements in the World
+
+- Note
+- Terminal
+- Briefcase
+- Light remote
+- Blacklight
+- Blacklight hidden messages
+- Desk
+- File cabinet
+- Pickaxe
+- Cracks in Floor
+- Wads of paper with ones and zeros
+- Keypad
+- Door with lock
+
 
 ## Minimum Viable Product (MVP)
 The MVP will consist of the two windows, the avatar that can move around the game space, and an item that

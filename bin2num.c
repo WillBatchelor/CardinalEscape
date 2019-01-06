@@ -1,12 +1,14 @@
 /* Convert a binary string to a number */
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #define PASS 1
 #define FAIL 0
 
 #define YES 1
 #define NO 0
+#define MAX_LEN 32
 
 
 /* Uncomment this macro to make testing exit out immediately after a failure */
@@ -43,20 +45,22 @@ unsigned long bin2num(const char *str, int ndigits)
 {
     int n;
     unsigned long num;
+	int pls;
 
     if(is_binary_string(str, ndigits) == NO) {
         return 0;
     }
 
     num = 0;
+	pls = pow(2,ndigits-1);
 
     for(n = 0; n < ndigits; n++) {
         if(str[n] == '1') {
-            /* TODO: what do we do when we find a 1? */
+			num += pls; 
         } else if(str[n] == '0') {
             /* TODO: what do we do when we find a 0? */
         }
-    }
+		pls /= 2; }
 
     return num;
 }
@@ -103,7 +107,7 @@ static int test_binary_string(const char *str, int ndigits, int expected)
     return PASS;
 }
 
-static int test_program(void)
+int test_program(void)
 {
     int rc;
     int tmp;
@@ -137,7 +141,7 @@ static int test_program(void)
     CHECK(tmp, rc);
     tmp = test_bin2num("101", 3, 5);
     CHECK(tmp, rc);
-    tmp = test_bin2num("101", 3, 6);
+    tmp = test_bin2num("110", 3, 6);
     CHECK(tmp, rc);
     tmp = test_bin2num("111", 3, 7);
     CHECK(tmp, rc);
@@ -146,7 +150,7 @@ static int test_program(void)
     /* make sure leftpadded zeros are handled okay */
     tmp = test_bin2num("001", 3, 1);
     CHECK(tmp, rc);
-    tmp = test_bin2num("000", 3, 1);
+    tmp = test_bin2num("000", 3, 0);
     CHECK(tmp, rc);
     tmp = test_bin2num("00010", 5, 2);
     CHECK(tmp, rc);
@@ -158,9 +162,15 @@ static int test_program(void)
         fprintf(stdout, "Oops! Looks like some tests failed.\n");
         return -1;
     }
-}
+} 
 
 int main(int argc, char *argv[])
 {
-    return test_program();
+	char a_word[MAX_LEN];
+
+	printf ("Welcome to the Cardinal Binary Converter. Please input a binary string: ");
+	scanf ("%s", a_word);
+	printf ("You entered: %s\n", a_word);
+	return 0;
+	/* return test_program(); */
 }
