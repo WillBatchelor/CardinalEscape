@@ -26,17 +26,17 @@
 
 int is_binary_string(const char *str, int ndigits)
 {
-    int n;
-    int rc;
+	int n;
+	int rc;
 
-    rc = YES;
-    for(n = 0; n < ndigits; n++) {
-        if(str[n] != '0' && str[n] != '1') {
-            rc = NO;
-            break;
-        }
-    }
-    return rc;
+	rc = YES;
+	for(n = 0; n < ndigits; n++) {
+		if(str[n] != '0' && str[n] != '1') {
+			rc = NO;
+			break;
+		}
+	}
+	return rc;
 }
 
 /* TODO: implement this algorithm */
@@ -61,8 +61,8 @@ unsigned long bin2num(const char *str, int ndigits)
             /* TODO: what do we do when we find a 0? */
         }
 		pls /= 2; }
-
-    return num;
+    printf("The converter returns: %lu", num);
+    return 0;
 }
 
 static int test_bin2num(const char *str, int ndigits, unsigned long expected)
@@ -166,11 +166,18 @@ int test_program(void)
 
 int main(int argc, char *argv[])
 {
-	char a_word[MAX_LEN];
+	char user_input[MAX_LEN];
+	const char *str;
+	int ndigits;
+	
+	str = user_input;
 
 	printf ("Welcome to the Cardinal Binary Converter. Please input a binary string: ");
-	scanf ("%s", a_word);
-	printf ("You entered: %s\n", a_word);
+	scanf ("%s", user_input);
+	ndigits = strlen(user_input);
+	printf ("You entered: %s\n", user_input);
+/*	printf("%s is %d characters long", user_input, ndigits);*/
+	bin2num(num);
 	return 0;
 	/* return test_program(); */
 }
