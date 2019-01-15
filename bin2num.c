@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
 	ndigits = strlen(user_input);
 	printf ("You entered: %s\n", user_input);
 /*	printf("%s is %d characters long", user_input, ndigits);*/
-	bin2num(num);
+	bin2num(str, ndigits);
 	return 0;
 	/* return test_program(); */
 }
